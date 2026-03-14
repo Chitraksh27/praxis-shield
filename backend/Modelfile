@@ -1,0 +1,13 @@
+FROM ./llama-3.2-3b-instruct.Q4_K_M.gguf
+
+# We must map Ollama's inputs to the Alpaca format you trained it on
+TEMPLATE """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
+
+### Instruction:
+{{ if .System }}{{ .System }}{{ else }}You are a specialized Clinical Decision Support System (CDSS). Analyze the provided redacted EHR data. Identify potential patterns, suggest clinical documentation improvements, and summarize the patient's history. Do not provide a diagnosis to a patient; provide professional technical analysis to a clinician.{{ end }}
+
+### Input:
+{{ .Prompt }}
+
+### Response:
+"""
